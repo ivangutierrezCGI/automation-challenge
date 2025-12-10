@@ -1,57 +1,41 @@
-terraform {
-  required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 3.0.0"
-    }
-  }
-}
+PS C:\Users\ivan.gutierrez\Desktop\automation-challenge\terraform> curl -v http://automation-challenge.cgi.com
+AUSFÜHRLICH: GET with 0-byte payload
+AUSFÜHRLICH: received 476-byte response of content type text/html
 
-provider "docker" {
-  # Usa el socket docker por defecto
-}
 
-# Build NGINX image from our Dockerfile
-resource "docker_image" "nginx_automation" {
-  name = "nginx-automation:latest"
+StatusCode        : 200
+StatusDescription : OK
+Content           : ÿþ<!DOCTYPE html>
+                    <html lang=
+                    en>
+                    <head>
+                        <meta charset=UTF-8>
+                        <title>Hello CGI!</title>
+                    </he...
+RawContent        : HTTP/1.1 200 OK
+                    Connection: keep-alive
+                    Accept-Ranges: bytes
+                    Content-Length: 476
+                    Content-Type: text/html
+                    Date: Wed, 10 Dec 2025 19:45:15 GMT
+                    ETag: "6938bbc2-1dc"
+                    Last-Modified: Wed, 10 Dec 2025 ...
+Forms             : {}
+Headers           : {[Connection, keep-alive], [Accept-Ranges, bytes], [Content-Length, 476], [Content-Type, text/html]...}
+Images            : {}
+InputFields       : {}
+Links             : {}
+ParsedHtml        : mshtml.HTMLDocumentClass
+RawContentLength  : 476
 
-  build {
-    context    = "${path.module}/../nginx"
-    dockerfile = "Dockerfile"
-  }
-}
 
-# Run container
-resource "docker_container" "nginx_automation" {
-  name    = "nginx-automation"
-  image   = docker_image.nginx_automation.image_id
-  restart = "unless-stopped"
 
-  # HTTP port
-  ports {
-    internal = 80
-    external = 80
-  }
+PS C:\Users\ivan.gutierrez\Desktop\automation-challenge\terraform> curl -v https://automation-challenge.cgi.com -k
+Invoke-WebRequest : Es wurde kein Parameter gefunden, der dem Parameternamen "k" entspricht.
+In Zeile:1 Zeichen:46
++ curl -v https://automation-challenge.cgi.com -k
++                                              ~~
+    + CategoryInfo          : InvalidArgument: (:) [Invoke-WebRequest], ParameterBindingException
+    + FullyQualifiedErrorId : NamedParameterNotFound,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
 
-  # HTTPS port
-  ports {
-    internal = 443
-    external = 443
-  }
-
-  # Mount for static HTML
-  mounts {
-    target    = "/usr/share/nginx/html"
-    source    = abspath("${path.module}/../html")
-    type      = "bind"
-    read_only = false
-  }
-
-  # Mount for TLS certificates
-  mounts {
-    target    = "/etc/nginx/certs"
-    source    = abspath("${path.module}/../certs")
-    type      = "bind"
-    read_only = true
-  }
-}
+PS C:\Users\ivan.gutierrez\Desktop\automation-challenge\terraform>
