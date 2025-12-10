@@ -1,15 +1,22 @@
 # Automation Challenge
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello CGI!</title>
-</head>
-<body>
-    <h1>Hello CGI!</h1>
-    <p>This page is served by an NGINX container managed with Terraform + Docker.</p>
-</body>
-</html>
+FROM nginx:alpine
+
+# Remove default config to avoid conflicts
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copy our custom config
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+# We'll serve static files from /usr/share/nginx/html
+# but the content will come from a mounted volume (host -> container),
+# so we don't need to COPY the html here.
+
+EXPOSE 80
+# 443 will be used later for HTTPS
+
+CMD ["nginx", "-g", "daemon off;"]
+
+
 
 
