@@ -48,29 +48,25 @@ High-level architecture:
   127.0.0.1    automation-challenge.cgi.com
 
 Docker maps host ports to container ports:
-
 80 -> 80 (HTTP)
 
 443 -> 443 (HTTPS)
 
 Volumes / Bind mounts
-
-Static content:
-
+- Static content:
 Host: ./html
 
 Container: /usr/share/nginx/html
 
 TLS certificates:
-
 Host: ./certs
 
 Container: /etc/nginx/certs
 
 NGINX configuration:
-
 Host: ./nginx/default.conf
 
 Container: /etc/nginx/conf.d/default.conf
 
 Thanks to bind mounts, updating HTML or NGINX configuration does not require rebuilding the Docker image.
+
