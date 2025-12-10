@@ -88,8 +88,10 @@ automation-challenge/
 │   ├── main.tf                   # Terraform config (Docker provider)
 │   └── ...                       # terraform.tfstate, etc.
 └── .github/
-    └── workflows/
+       
+	   └── workflows/
         └── ci.yml                # GitHub Actions CI pipeline
+
 
 
 
