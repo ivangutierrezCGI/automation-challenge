@@ -358,6 +358,20 @@ Push images to a container registry.
 Trigger deployment steps in a more advanced environment.
 
 
+## Project status
+
+Core challenge and both bonus requirements are completed:
+
+- NGINX webserver deployed in a Docker container managed by Terraform.
+- HTTP and HTTPS configured with a self-signed TLS certificate for `automation-challenge.cgi.com`.
+- Static “Hello CGI!” page updated via bind mounts without rebuilding the image.
+- CI pipeline implemented with GitHub Actions (Terraform fmt/validate + Docker build).
+
+Note: On a corporate laptop, the browser may block bypassing self-signed certificate warnings.  
+HTTPS behaviour is therefore demonstrated and verified using `curl -v https://automation-challenge.cgi.com -k`.
+
+
+
 
 
 
