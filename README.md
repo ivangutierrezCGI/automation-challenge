@@ -1,21 +1,17 @@
 # Automation Challenge
 
-FROM nginx:alpine
+server {
+    listen 80;
+    server_name automation-challenge.cgi.com;
 
-# Remove default config to avoid conflicts
-RUN rm /etc/nginx/conf.d/default.conf
+    root /usr/share/nginx/html;
+    index index.html;
 
-# Copy our custom config
-COPY default.conf /etc/nginx/conf.d/default.conf
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
 
-# We'll serve static files from /usr/share/nginx/html
-# but the content will come from a mounted volume (host -> container),
-# so we don't need to COPY the html here.
-
-EXPOSE 80
-# 443 will be used later for HTTPS
-
-CMD ["nginx", "-g", "daemon off;"]
 
 
 
