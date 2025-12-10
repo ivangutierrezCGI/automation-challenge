@@ -1,49 +1,76 @@
-ivangutierrezgit@DE-GW75SG3:/mnt/c/Users/ivan.gutierrez/Desktop/automation-challenge$ curl -v https://automation-challenge.cgi.com -k
-* Host automation-challenge.cgi.com:443 was resolved.
-* IPv6: (none)
-* IPv4: 127.0.0.1
-*   Trying 127.0.0.1:443...
-* Connected to automation-challenge.cgi.com (127.0.0.1) port 443
-* ALPN: curl offers h2,http/1.1
-* TLSv1.3 (OUT), TLS handshake, Client hello (1):
-* TLSv1.3 (IN), TLS handshake, Server hello (2):
-* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
-* TLSv1.3 (IN), TLS handshake, Certificate (11):
-* TLSv1.3 (IN), TLS handshake, CERT verify (15):
-* TLSv1.3 (IN), TLS handshake, Finished (20):
-* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
-* TLSv1.3 (OUT), TLS handshake, Finished (20):
-* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / X25519 / RSASSA-PSS
-* ALPN: server accepted http/1.1
-* Server certificate:
-*  subject: CN=automation-challenge.cgi.com
-*  start date: Dec 10 19:30:04 2025 GMT
-*  expire date: Dec 10 19:30:04 2026 GMT
-*  issuer: CN=automation-challenge.cgi.com
-*  SSL certificate verify result: self-signed certificate (18), continuing anyway.
-*   Certificate level 0: Public key type RSA (2048/112 Bits/secBits), signed using sha256WithRSAEncryption
-* using HTTP/1.x
-> GET / HTTP/1.1
-> Host: automation-challenge.cgi.com
-> User-Agent: curl/8.5.0
-> Accept: */*
->
-* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
-* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
-* old SSL session ID is stale, removing
-< HTTP/1.1 200 OK
-< Server: nginx/1.29.4
-< Date: Wed, 10 Dec 2025 20:40:57 GMT
-< Content-Type: text/html
-< Content-Length: 476
-< Last-Modified: Wed, 10 Dec 2025 00:16:02 GMT
-< Connection: keep-alive
-< ETag: "6938bbc2-1dc"
-< Accept-Ranges: bytes
-<
-Warning: Binary output can mess up your terminal. Use "--output -" to tell
-Warning: curl to output it to your terminal anyway, or consider "--output
-Warning: <FILE>" to save to a file.
-* Failure writing output to destination
-* Closing connection
-* TLSv1.3 (OUT), TLS alert, close notify (256):
+# Automation Challenge – NGINX + Terraform + Docker
+
+This repository contains my solution for the **Cloud & DevOps automation challenge**:
+
+> Deploy an NGINX webserver using automation, serve a “Hello CGI!” page over HTTP and HTTPS, handle TLS for a given FQDN, and make static content modifiable without rebuilding the container image. Optionally, add a CI pipeline.
+
+---
+
+## 1. Overview
+
+**Goal**
+
+- Deploy an NGINX web server as a container.
+- Expose it on both **HTTP (80)** and **HTTPS (443)**.
+- Use a **TLS certificate** for the FQDN `automation-challenge.cgi.com`.
+- Allow the **static “Hello CGI!” page** to be changed **without rebuilding the container image**.
+- Demonstrate “automation first” mindset using **Terraform** and **GitHub Actions**.
+
+**Key technologies**
+
+- **Docker** – container runtime for NGINX.
+- **Terraform** – infrastructure as code using the Docker provider.
+- **NGINX** – HTTP/HTTPS web server.
+- **OpenSSL** – self-signed TLS certificate.
+- **GitHub Actions** – CI pipeline (Terraform fmt/validate + Docker build).
+- **Windows 11 + WSL** – local development environment.
+
+---
+
+## 2. Architecture
+
+High-level architecture:
+
+- **Host**: Windows 11 laptop with WSL (Ubuntu), Docker and Terraform installed.
+- **Container**:  
+  - Image built from `nginx:alpine` with custom config.  
+  - Runs as `nginx-automation` container.
+- **Terraform (Docker provider)**:  
+  - Builds the NGINX image from `./nginx/Dockerfile`.  
+  - Creates and manages the container.  
+  - Configures **port mappings** and **bind mounts**.
+
+**Networking & FQDN**
+
+- The FQDN `automation-challenge.cgi.com` is resolved locally via the Windows `hosts` file:
+
+  ```text
+  127.0.0.1    automation-challenge.cgi.com
+
+Docker maps host ports to container ports:
+
+80 -> 80 (HTTP)
+
+443 -> 443 (HTTPS)
+
+Volumes / Bind mounts
+
+Static content:
+
+Host: ./html
+
+Container: /usr/share/nginx/html
+
+TLS certificates:
+
+Host: ./certs
+
+Container: /etc/nginx/certs
+
+NGINX configuration:
+
+Host: ./nginx/default.conf
+
+Container: /etc/nginx/conf.d/default.conf
+
+Thanks to bind mounts, updating HTML or NGINX configuration does not require rebuilding the Docker image.
