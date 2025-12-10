@@ -74,4 +74,23 @@ High-level architecture:
 
 Thanks to bind mounts, updating HTML or NGINX configuration does not require rebuilding the Docker image.
 
+automation-challenge/
+├── README.md
+├── html/
+│   └── index.html                # "Hello CGI!" page (static content)
+├── nginx/
+│   ├── Dockerfile                # Custom NGINX image
+│   └── default.conf              # NGINX HTTP+HTTPS config
+├── certs/
+│   ├── automation-challenge.cgi.com.key  # TLS private key (self-signed)
+│   └── automation-challenge.cgi.com.crt  # TLS certificate (self-signed)
+├── terraform/
+│   ├── main.tf                   # Terraform config (Docker provider)
+│   └── ...                       # terraform.tfstate, etc.
+└── .github/
+    └── workflows/
+        └── ci.yml                # GitHub Actions CI pipeline
+
+
+
 
