@@ -1,12 +1,7 @@
-PS C:\Users\ivan.gutierrez\Desktop\automation-challenge> git status
-On branch main
-Your branch and 'origin/main' have diverged,
-and have 1 and 39 different commits each, respectively.
-  (use "git pull" if you want to integrate the remote branch with yours)
+cd "C:\Users\ivan.gutierrez\Desktop\automation-challenge"
 
-All conflicts fixed but you are still merging.
-  (use "git commit" to conclude merge)
+# 1. Borrar el archivo del disco
+del "delete this"
 
-Changes to be committed:
-        modified:   README.md
-        new file:   delete this
+# 2. Registrar la eliminación en Git
+git add -u
