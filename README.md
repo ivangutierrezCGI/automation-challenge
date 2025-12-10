@@ -47,26 +47,31 @@ High-level architecture:
   ```text
   127.0.0.1    automation-challenge.cgi.com
 
-Docker maps host ports to container ports:
-80 -> 80 (HTTP)
+####   Docker maps host ports to container ports:
 
-443 -> 443 (HTTPS)
+- 80 -> 80 (HTTP)
 
-Volumes / Bind mounts
-- Static content:
-Host: ./html
+- 443 -> 443 (HTTPS)
 
-Container: /usr/share/nginx/html
+#### Volumes / Bind mounts
+##### - Static content:
 
-TLS certificates:
-Host: ./certs
+- Host: ./html
 
-Container: /etc/nginx/certs
+- Container: /usr/share/nginx/html
 
-NGINX configuration:
-Host: ./nginx/default.conf
+##### TLS certificates:
 
-Container: /etc/nginx/conf.d/default.conf
+- Host: ./certs
+
+- Container: /etc/nginx/certs
+
+##### NGINX configuration:
+
+- Host: ./nginx/default.conf
+
+- Container: /etc/nginx/conf.d/default.conf
 
 Thanks to bind mounts, updating HTML or NGINX configuration does not require rebuilding the Docker image.
+
 
