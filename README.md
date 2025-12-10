@@ -1,27 +1,57 @@
-# HTTP: redirect everything to HTTPS
-server {
-    listen 80;
-    server_name automation-challenge.cgi.com;
-
-    return 301 https://$host$request_uri;
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "~> 3.0.0"
+    }
+  }
 }
 
-# HTTPS: serve the site with TLS
-server {
-    listen 443 ssl;
-    server_name automation-challenge.cgi.com;
+provider "docker" {
+  # Usa el socket docker por defecto
+}
 
-    # Paths inside the container (we los montaremos con Terraform)
-    ssl_certificate     /etc/nginx/certs/automation-challenge.cgi.com.crt;
-    ssl_certificate_key /etc/nginx/certs/automation-challenge.cgi.com.key;
+# Build NGINX image from our Dockerfile
+resource "docker_image" "nginx_automation" {
+  name = "nginx-automation:latest"
 
-    ssl_protocols       TLSv1.2 TLSv1.3;
-    ssl_ciphers         HIGH:!aNULL:!MD5;
+  build {
+    context    = "${path.module}/../nginx"
+    dockerfile = "Dockerfile"
+  }
+}
 
-    root /usr/share/nginx/html;
-    index index.html;
+# Run container
+resource "docker_container" "nginx_automation" {
+  name    = "nginx-automation"
+  image   = docker_image.nginx_automation.image_id
+  restart = "unless-stopped"
 
-    location / {
-        try_files $uri $uri/ =404;
-    }
+  # HTTP port
+  ports {
+    internal = 80
+    external = 80
+  }
+
+  # HTTPS port
+  ports {
+    internal = 443
+    external = 443
+  }
+
+  # Mount for static HTML
+  mounts {
+    target    = "/usr/share/nginx/html"
+    source    = abspath("${path.module}/../html")
+    type      = "bind"
+    read_only = false
+  }
+
+  # Mount for TLS certificates
+  mounts {
+    target    = "/etc/nginx/certs"
+    source    = abspath("${path.module}/../certs")
+    type      = "bind"
+    read_only = true
+  }
 }
