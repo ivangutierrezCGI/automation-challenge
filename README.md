@@ -25,6 +25,18 @@ Mode                 LastWriteTime         Length Name
 
 
 
+La salida de ls -l ../html.
+
+La salida de ls -l /usr/share/nginx/html dentro del contenedor.
+
+Si cat /usr/share/nginx/html/index.html muestra tu HTML con “Hello CGI!”.
+
+Después de cambiar a abspath (y/o mover a ~/automation-challenge), dime si curl http://localhost ya muestra la página correctamente.
+
+Cuando veamos “Hello CGI!” por HTTP, pasamos al siguiente nivel: configurar HTTPS + certificado self-signed para automation-challenge.cgi.com.
+
+
+
 
 
 
