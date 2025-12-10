@@ -1,1 +1,9 @@
-git commit -m "Add automation challenge solution with HTTPS and CI"
+PS C:\Users\ivan.gutierrez\Desktop\automation-challenge> git push origin main
+To https://github.com/ivangutierrezCGI/automation-challenge
+ ! [rejected]        main -> main (non-fast-forward)
+error: failed to push some refs to 'https://github.com/ivangutierrezCGI/automation-challenge'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+PS C:\Users\ivan.gutierrez\Desktop\automation-challenge>
