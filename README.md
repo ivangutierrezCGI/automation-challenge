@@ -23,6 +23,13 @@ Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
 -a----        10.12.2025     01:16            476 index.html
 
+ivangutierrezgit@DE-GW75SG3:/mnt/c/Users/ivan.gutierrez/Desktop/automation-challenge$ docker exec -it nginx-automation sh
+/ # ls -l /usr/share/nginx/html
+total 0
+/ # cat /usr/share/nginx/html/index.html
+cat: can't open '/usr/share/nginx/html/index.html': No such file or directory
+/ #
+
 
 
 La salida de ls -l ../html.
@@ -44,6 +51,7 @@ docker exec -it nginx-automation sh
 ls -l /usr/share/nginx/html
 cat /usr/share/nginx/html/index.html
 exit
+
 
 
 
