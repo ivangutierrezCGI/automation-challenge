@@ -74,6 +74,9 @@ High-level architecture:
 
 Thanks to bind mounts, updating HTML or NGINX configuration does not require rebuilding the Docker image.
 
+
+
+
 automation-challenge/
 ├── README.md
 ├── html/
@@ -88,9 +91,11 @@ automation-challenge/
 │   ├── main.tf                   # Terraform config (Docker provider)
 │   └── ...                       # terraform.tfstate, etc.
 └── .github/
-       
-	   └── workflows/
+    └── workflows/
         └── ci.yml                # GitHub Actions CI pipeline
+		
+
+
 
 
 
