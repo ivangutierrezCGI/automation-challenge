@@ -77,23 +77,25 @@ Thanks to bind mounts, updating HTML or NGINX configuration does not require reb
 
 
 
-automation-challenge/
-├── README.md
-├── html/
-│   └── index.html                # "Hello CGI!" page (static content)
-├── nginx/
-│   ├── Dockerfile                # Custom NGINX image
-│   └── default.conf              # NGINX HTTP+HTTPS config
-├── certs/
-│   ├── automation-challenge.cgi.com.key  # TLS private key (self-signed)
-│   └── automation-challenge.cgi.com.crt  # TLS certificate (self-signed)
-├── terraform/
-│   ├── main.tf                   # Terraform config (Docker provider)
-│   └── ...                       # terraform.tfstate, etc.
-└── .github/
-    └── workflows/
-        └── ci.yml                # GitHub Actions CI pipeline
+AUTOMATION-CHALLENGE/
+├── README.MD
+├── HTML/
+│   └── INDEX.HTML                # "HELLO CGI!" PAGE (STATIC CONTENT)
+├── NGINX/
+│   ├── DOCKERFILE                # CUSTOM NGINX IMAGE
+│   └── DEFAULT.CONF              # NGINX HTTP+HTTPS CONFIG
+├── CERTS/
+│   ├── AUTOMATION-CHALLENGE.CGI.COM.KEY  # TLS PRIVATE KEY (SELF-SIGNED)
+│   └── AUTOMATION-CHALLENGE.CGI.COM.CRT  # TLS CERTIFICATE (SELF-SIGNED)
+├── TERRAFORM/
+│   ├── MAIN.TF                   # TERRAFORM CONFIG (DOCKER PROVIDER)
+│   └── ...                       # TERRAFORM.TFSTATE, ETC.
+└── .GITHUB/
+       
+	   └── WORKFLOWS/
+        └── CI.YML                # GITHUB ACTIONS CI PIPELINE
 		
+
 
 
 
