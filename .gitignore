@@ -4,4 +4,9 @@ terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 
 # TLS private material
+certs/azure-certs/
+certs/
+
+# Azure TLS material (do not commit)
+azure-certs/
 certs/
